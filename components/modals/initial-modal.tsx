@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { FileUpload } from "@/components/file-upload";
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -59,8 +60,8 @@ export const InitialModal = () => {
     <Dialog open>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center">
-            自定义你的服务器
+          <DialogTitle className="text-2xl text-center tracking-widest">
+            定制您的专属服务器
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             为您的服务器赋予一个有个性的名字和头像。您可以随时更改它。
@@ -69,8 +70,22 @@ export const InitialModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mt-8 mb-8 px-6">
-              <div className="flex items-center justify-center text-center">
-                TODO: 图像上传
+              <div className="flex items-center justify-center text-center mb-8">
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <FormField
@@ -84,7 +99,7 @@ export const InitialModal = () => {
                         <Input
                           disabled={isLoading}
                           className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                          placeholder="请 输 入 服 务 器 名 称 ^.^"
+                          placeholder="请 输 入 服 务 器 名 称 ^_^"
                           {...field}
                         />
                         {form.formState.errors.name && (
@@ -102,7 +117,7 @@ export const InitialModal = () => {
               <Button
                 variant="primary"
                 disabled={isLoading}
-                className="text-bold text-white tracking-widest "
+                className="text-bold text-white tracking-widest"
               >
                 创 建
               </Button>
