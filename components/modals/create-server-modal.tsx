@@ -24,20 +24,21 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "服务器名称是必填项!",
+  }),
+  imageUrl: z.string().min(1, {
+    message: "图片链接是必填项!",
+  }),
+});
+
 export const CreateServerModal = () => {
   const { type, isOpen, onClose } = useModal();
   const router = useRouter();
 
   const isModalOpen = type === "createServer" && isOpen;
-
-  const formSchema = z.object({
-    name: z.string().min(1, {
-      message: "服务器名称是必填项!",
-    }),
-    imageUrl: z.string().min(1, {
-      message: "图片链接是必填项!",
-    }),
-  });
 
   const form = useForm({
     resolver: zodResolver(formSchema),

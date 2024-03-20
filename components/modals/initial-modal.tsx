@@ -24,6 +24,16 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
+
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "服务器名称是必填项!",
+  }),
+  imageUrl: z.string().min(1, {
+    message: "图片链接是必填项!",
+  }),
+});
+
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
@@ -31,15 +41,6 @@ export const InitialModal = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const formSchema = z.object({
-    name: z.string().min(1, {
-      message: "服务器名称是必填项!",
-    }),
-    imageUrl: z.string().min(1, {
-      message: "图片链接是必填项!",
-    }),
-  });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
