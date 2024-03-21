@@ -113,11 +113,7 @@ export const CreateServerModal = () => {
                           placeholder="请 输 入 服 务 器 名 称 ^_^"
                           {...field}
                         />
-                        {form.formState.errors.name && (
-                          <p className="text-red-500 text-right">
-                            {form.formState.errors.name.message}
-                          </p>
-                        )}
+                        <FormMessage />
                       </>
                     </FormControl>
                   </FormItem>
