@@ -77,13 +77,19 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
-          <DropdownMenuItem className="text-rose-500 px-3 py-2 text-sm cursor-pointer">
+          <DropdownMenuItem
+            className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
+            onClick={() => onOpen("deleteServer", { server })}
+          >
             删除服务器
             <Trash className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
         {!isAdmin && (
-          <DropdownMenuItem className="text-rose-500 px-3 py-2 text-sm cursor-pointer">
+          <DropdownMenuItem
+            className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
+            onClick={() => onOpen("leaveServer", { server })}
+          >
             离开服务器
             <LogOut className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
