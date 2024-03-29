@@ -1,5 +1,6 @@
 "use client";
 
+import qs from "query-string";
 import axios from "axios";
 import {
   Dialog,
@@ -14,20 +15,27 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
   const { type, isOpen, onClose, data } = useModal();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { server } = data;
-  const isModalOpen = type === "deleteServer" && isOpen;
+
+  const { server, channel } = data;
+  const isModalOpen = type === "deleteChannel" && isOpen;
 
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/servers/${server?.id}/delete`);
+
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: { serverId: server?.id },
+      });
+      await axios.delete(url);
+
       onClose();
-      // window.location.reload();
-      router.push("/");
+      //   window.location.reload();
+      router.push(`/servers/${server?.id}`);
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -41,12 +49,12 @@ export const DeleteServerModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center tracking-widest">
-            删除服务器
+            删除频道
           </DialogTitle>
           <DialogDescription className="tracking-widest text-center text-zinc-500x">
             你确定你要这么做么?
             <br />
-            <span className="font-bold text-indigo-500">{server?.name}</span>
+            <span className="font-bold text-indigo-500">#{channel?.name}</span>
             将会被<span className="text-red-500">永久删除</span>
           </DialogDescription>
         </DialogHeader>
