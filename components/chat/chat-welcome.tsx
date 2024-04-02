@@ -20,7 +20,7 @@ export const ChatWelcome = ({ name, type }: ChatWelcomeProps) => {
       <p className="text-zinc-600 dark:text-zinc-400 text-sm tracking-widest">
         {type === "channel"
           ? `这是频道 #${name} 的第一条消息`
-          : `这是您对话 ${name} 的第一条消息`}
+          : `这是您和 ${name} 对话的第一条消息`}
       </p>
     </div>
   );
